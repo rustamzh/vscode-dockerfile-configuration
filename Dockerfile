@@ -33,4 +33,4 @@ RUN sudo sysctl -w fs.inotify.max_user_watches=524288
 ADD ./entrypoint.sh /usr/bin/entrypoint.sh
 RUN sudo chmod +x /usr/bin/entrypoint.sh
 
-ENTRYPOINT ["bash", "/usr/bin/entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
