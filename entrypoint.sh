@@ -10,7 +10,7 @@ echo "${HOME_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 # sudo su - ${HOME_USER}
 
 if [[ -z "${VSCODE_TUNNEL_NAME}" ]]; then
-    code-server tunnel --accept-server-license-terms
+    code tunnel --accept-server-license-terms
 else
-    code-server tunnel --accept-server-license-terms --name ${VSCODE_TUNNEL_NAME}
+    code tunnel --accept-server-license-terms --name ${VSCODE_TUNNEL_NAME}
 fi
