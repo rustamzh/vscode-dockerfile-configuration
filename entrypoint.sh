@@ -7,7 +7,7 @@ addgroup nonroot
 adduser --disabled-password --gecos "" ${HOME_USER}
 echo "${HOME_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-sudo su - ${HOME_USER}
+# sudo su - ${HOME_USER}
 
 if [[ -z "${VSCODE_TUNNEL_NAME}" ]]; then
     code-server tunnel --accept-server-license-terms
