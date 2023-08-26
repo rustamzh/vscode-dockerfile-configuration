@@ -3,7 +3,6 @@ FROM ubuntu:22.04
 # Update the package list, install sudo, create a non-root user, and grant password-less sudo permissions
 RUN apt update
 RUN apt install -y sudo
-RUN addgroup nonroot
 
 RUN sudo apt-get update
 #Instalando Curl
