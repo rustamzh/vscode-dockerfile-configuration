@@ -8,6 +8,8 @@ adduser --disabled-password --gecos "" ${HOME_USER}
 echo "${HOME_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 #Creating extensions folder
+sudo mkdir /home/${HOME_USER}/.config/Code
+sudo chmod -R a+rwX /home/${HOME_USER}/.config/Code
 sudo mkdir /home/${HOME_USER}/.vscode-server
 sudo chmod -R a+rwX /home/${HOME_USER}/.vscode-server
 code --extensions-dir /home/${HOME_USER}/.vscode-server
