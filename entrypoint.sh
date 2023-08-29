@@ -23,7 +23,7 @@ if [ -f "/home/extensions.json" ]; then
     # Loop through the extensions and process each element
     for extension in $extensions; do
         echo "Installing extension: $extension"
-        sudo su - ${HOME_USER} -c "code --install-extension $extension --extensions-dir "
+        sudo su - ${HOME_USER} -c "code --install-extension $extension"
     done
     #sudo mkdir /home/${HOME_USER}/.vscode-server
     #sudo mkdir /home/${HOME_USER}/.vscode-server-insiders
