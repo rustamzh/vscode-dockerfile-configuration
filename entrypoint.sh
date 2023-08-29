@@ -12,7 +12,7 @@ sudo mkdir /home/${HOME_USER}/.config/Code
 sudo chmod -R a+rwX /home/${HOME_USER}/.config/Code
 sudo mkdir /home/${HOME_USER}/.vscode-server
 sudo chmod -R a+rwX /home/${HOME_USER}/.vscode-server
-code --extensions-dir /home/${HOME_USER}/.vscode-server
+sudo su - ${HOME_USER} -c "code --extensions-dir /home/${HOME_USER}/.vscode-server"
 
 # Check if the data.json file exists
 if [ -f "/home/extensions.json" ]; then
