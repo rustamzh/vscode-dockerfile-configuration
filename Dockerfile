@@ -9,6 +9,8 @@ RUN sudo apt-get update
 RUN sudo apt-get install -y curl
 #Instalando wget
 RUN sudo apt-get install -y wget
+#Instalando jq
+RUN sudo apt-get install -y jq
 
 #Instalando devtunnel
 #Comandos que no se deben olvidar correr al crear el devtunnel
