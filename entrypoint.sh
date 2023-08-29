@@ -7,6 +7,11 @@ addgroup nonroot
 adduser --disabled-password --gecos "" ${HOME_USER}
 echo "${HOME_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
+#Creating extensions folder
+sudo mkdir /home/${HOME_USER}/.vscode-server
+sudo chmod -R a+rwX /home/${HOME_USER}/.vscode-server
+code --extensions-dir /home/${HOME_USER}/.vscode-server
+
 # Check if the data.json file exists
 if [ -f "/home/extensions.json" ]; then
     # Read the JSON file into a variable
@@ -18,7 +23,7 @@ if [ -f "/home/extensions.json" ]; then
     # Loop through the extensions and process each element
     for extension in $extensions; do
         echo "Installing extension: $extension"
-        sudo su - ${HOME_USER} -c "code --install-extension $extension"
+        sudo su - ${HOME_USER} -c "code --install-extension $extension --extensions-dir "
     done
     #sudo mkdir /home/${HOME_USER}/.vscode-server
     #sudo mkdir /home/${HOME_USER}/.vscode-server-insiders
