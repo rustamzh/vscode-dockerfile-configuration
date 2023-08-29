@@ -12,7 +12,8 @@ sudo mkdir /home/${HOME_USER}/.config/Code
 sudo chmod -R a+rwX /home/${HOME_USER}/.config/Code
 sudo mkdir /home/${HOME_USER}/.vscode-server
 sudo chmod -R a+rwX /home/${HOME_USER}/.vscode-server
-sudo su - ${HOME_USER} -c "code --extensions-dir /home/${HOME_USER}/.vscode-server"
+sudo mkdir /home/${HOME_USER}/.vscode-server-insiders
+sudo chmod -R a+rwX /home/${HOME_USER}/.vscode-server-insiders
 
 # Check if the data.json file exists
 if [ -f "/home/extensions.json" ]; then
@@ -27,13 +28,11 @@ if [ -f "/home/extensions.json" ]; then
         echo "Installing extension: $extension"
         sudo su - ${HOME_USER} -c "code --install-extension $extension"
     done
-    #sudo mkdir /home/${HOME_USER}/.vscode-server
-    #sudo mkdir /home/${HOME_USER}/.vscode-server-insiders
-    #sudo cp -R /home/${HOME_USER}/.vscode/* /home/${HOME_USER}/.vscode-server
-    #sudo cp -R /home/${HOME_USER}/.vscode/* /home/${HOME_USER}.vscode-server-insiders
-    #sudo chmod -R a+rwX /home/${HOME_USER}/.vscode
-    #sudo chmod -R a+rwX /home/${HOME_USER}/.vscode-server
-    #sudo chmod -R a+rwX /home/${HOME_USER}/.vscode-server-insiders
+    sudo cp -R /home/${HOME_USER}/.vscode/* /home/${HOME_USER}/.vscode-server
+    sudo cp -R /home/${HOME_USER}/.vscode/* /home/${HOME_USER}.vscode-server-insiders
+    sudo chmod -R a+rwX /home/${HOME_USER}/.vscode
+    sudo chmod -R a+rwX /home/${HOME_USER}/.vscode-server
+    sudo chmod -R a+rwX /home/${HOME_USER}/.vscode-server-insiders
 else
     echo "File extensions.json not found"
 fi
