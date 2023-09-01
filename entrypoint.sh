@@ -21,7 +21,7 @@ if [ -f "/home/extensions.json" ]; then
     jsonExtensions=$(cat /home/extensions.json)
 
     # Use jq to extract the extension parameter from the JSON array
-    extensions=$(echo $jsonExtensions | jq -r '.[].extensionsGroup[].extensions[].uniqueIdentifier')
+    extensions=$(echo $jsonExtensions | jq -r '.[].extensionsGroup.extensions[].uniqueIdentifier')
 
     # Loop through the extensions and process each element
     for extension in $extensions; do
