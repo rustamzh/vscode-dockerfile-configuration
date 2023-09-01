@@ -19,12 +19,38 @@ The following environment variables can be set when running the Docker container
 
 ### Adding VSCode Extensions
 
-To add VSCode extensions to the container, create a JSON file with an array of strings containing the extension identifier of each extension you want to install. For example:
+To add VSCode extensions to the container, create a JSON file with an array of objects containing the extension details you want to install, the only Mandatory field is uniqueIdentifier and follow this structure. For example:
 ```
-[ 
-    "ms-python.python",
-    "ms-vscode.cpptools", 
-    "ms-azuretools.vscode-docker"
+[
+    {
+        "extensionsGroup": {
+            "description": "Extensions of Spanish Language Pack",
+            "extensions": [
+                {
+                    "name": "Spanish Language Pack for Visual Studio Code",
+                    "notes": "Extension of Spanish Language Pack for Visual Studio Code",
+                    "uniqueIdentifier": "ms-ceintl.vscode-language-pack-es"
+                }
+            ]
+        }
+    },
+    {
+        "extensionsGroup": {
+            "description": "Extensions of Github Copilot",
+            "extensions": [
+                {
+                    "name": "GitHub Copilot",
+                    "notes": "Extension of GitHub Copilot",
+                    "uniqueIdentifier": "github.copilot"
+                },
+                {
+                    "name": "GitHub Copilot Chat",
+                    "notes": "Extension of GitHub Copilot Chat",
+                    "uniqueIdentifier": "github.copilot-chat"
+                }
+            ]
+        }
+    }
 ]
 ```
 
