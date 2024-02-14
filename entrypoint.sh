@@ -1,7 +1,7 @@
 #!/bin/bash
-#if [[ -z "${HOME_USER}" ]]; then
-#    HOME_USER="vscode"
-#fi
+if [[ -z "${HOME_USER}" ]]; then
+    HOME_USER="vscode"
+fi
 
 set -eu
 
@@ -15,10 +15,10 @@ if [ "${HOME_USER-}" ]; then
     echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
     # Unfortunately we cannot change $HOME as we cannot move any bind mounts
     # nor can we bind mount $HOME into a new home as that requires a privileged container.
-    sudo usermod --login "$HOME_USER" vscode
-    sudo groupmod -n "$HOME_USER" vscode
+    sudo usermod --login "$HOME_USER" $HOME_USER
+    sudo groupmod -n "$HOME_USER" $HOME_USER
 
-    sudo sed -i "/vscode/d" /etc/sudoers.d/nopasswd
+    sudo sed -i "/$HOME_USER/d" /etc/sudoers.d/nopasswd
   fi
 fi
 
