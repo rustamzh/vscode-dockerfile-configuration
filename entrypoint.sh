@@ -25,7 +25,7 @@ then
 else
   echo "INFO: Group doesn't exist; creating..."
   # create the group
-  addgroup -g "${MY_GID}" "${MY_GROUP}" || (echo "INFO: Group exists but with a different name; renaming..."; groupmod -g "${MY_GID}" -n "${MY_GROUP}" "$(awk -F ':' '{print $1":"$3}' < /etc/group | grep ":${MY_GID}$" | awk -F ":" '{print $1}')")
+  sudo addgroup -g "${MY_GID}" "${MY_GROUP}" || (echo "INFO: Group exists but with a different name; renaming..."; sudo groupmod -g "${MY_GID}" -n "${MY_GROUP}" "$(awk -F ':' '{print $1":"$3}' < /etc/group | grep ":${MY_GID}$" | awk -F ":" '{print $1}')")
 fi
 
 
@@ -36,14 +36,8 @@ then
 else
   echo "INFO: User doesn't exist; creating..."
   # create the user
-  adduser -u "${MY_UID}" -G "${MY_GROUP}" -h "/home/${HOME_USER}" -s /bin/sh -D "${HOME_USER}"
+  sudo adduser -u "${MY_UID}" -G "${MY_GROUP}" -h "/home/${HOME_USER}" -s /bin/sh -D "${HOME_USER}"
 fi
-
-# make the directories needed to run my app
-mkdir -p /opt/myapp
-
-# change ownership of any directories needed to run my app as the proper UID/GID
-chown -R "${HOME_USER}:${MY_GROUP}" "/opt/myapp"
 
 # addgroup nonroot
 #adduser --disabled-password --gecos "" ${HOME_USER}
