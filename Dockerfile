@@ -44,7 +44,7 @@ RUN sudo sysctl -w fs.inotify.max_user_watches=524288
 ADD ./entrypoint.sh /usr/bin/entrypoint.sh
 RUN sudo chmod +x /usr/bin/entrypoint.sh
 
-#USER 1000
+USER 1000
 ENV USER=vscode
 WORKDIR /home/vscode
 
