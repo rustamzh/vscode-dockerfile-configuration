@@ -12,7 +12,7 @@ RUN sudo apt-get install -y wget
 #Instalando jq
 RUN sudo apt-get install -y jq
 
-RUN adduser --uid 1001 --gecos '' --disabled-password vscode \
+RUN adduser --gecos '' --disabled-password vscode \
     && echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
 RUN ARCH="$(dpkg --print-architecture)" \
@@ -44,7 +44,7 @@ RUN sudo sysctl -w fs.inotify.max_user_watches=524288
 ADD ./entrypoint.sh /usr/bin/entrypoint.sh
 RUN sudo chmod +x /usr/bin/entrypoint.sh
 
-USER 1000
+#USER 1000
 ENV USER=vscode
 WORKDIR /home/vscode
 

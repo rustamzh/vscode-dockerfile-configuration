@@ -13,9 +13,6 @@ fi
 # Otherwise the current container UID may not exist in the passwd database.
 eval "$(fixuid -q)"
 
-echo "HOME_USER: ${HOME_USER}"
-echo "whoami: $(whoami)"
-
 if [ "${HOME_USER-}" ]; then
   USER="$HOME_USER"
   if [ "$HOME_USER" != "$(whoami)" ]; then
