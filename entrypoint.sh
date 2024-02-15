@@ -1,9 +1,13 @@
 #!/bin/bash
+set -eu
+
 if [[ -z "${HOME_USER}" ]]; then
     HOME_USER="vscode"
 fi
 
-set -eu
+#addgroup nonroot
+#adduser --disabled-password --gecos "" ${HOME_USER}
+#echo "${HOME_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # We do this first to ensure sudo works below when renaming the user.
 # Otherwise the current container UID may not exist in the passwd database.
@@ -15,16 +19,13 @@ if [ "${HOME_USER-}" ]; then
     echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
     # Unfortunately we cannot change $HOME as we cannot move any bind mounts
     # nor can we bind mount $HOME into a new home as that requires a privileged container.
-    sudo usermod --login "$HOME_USER" $HOME_USER
-    sudo groupmod -n "$HOME_USER" $HOME_USER
+    sudo usermod --login "$HOME_USER" vscode
+    sudo groupmod -n "$HOME_USER" vscode
 
-    sudo sed -i "/$HOME_USER/d" /etc/sudoers.d/nopasswd
+    sudo sed -i "/vscode/d" /etc/sudoers.d/nopasswd
   fi
 fi
 
-#addgroup nonroot
-#adduser --disabled-password --gecos "" ${HOME_USER}
-#echo "${HOME_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 #Creating extensions folder
 sudo mkdir /home/${HOME_USER}/.config/Code
