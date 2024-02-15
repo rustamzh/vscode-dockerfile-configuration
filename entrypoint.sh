@@ -13,16 +13,19 @@ fi
 # Otherwise the current container UID may not exist in the passwd database.
 eval "$(fixuid -q)"
 
-if [ "${DOCKER_USER-}" ]; then
-  USER="$DOCKER_USER"
-  if [ "$DOCKER_USER" != "$(whoami)" ]; then
-    echo "$DOCKER_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
+if [ "${HOME_USER-}" ]; then
+  USER="$HOME_USER"
+  if [ "$HOME_USER" != "$(whoami)" ]; then
+    adduser --disabled-password --gecos "" ${HOME_USER}
+    echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
+    su - $HOME_USER
     # Unfortunately we cannot change $HOME as we cannot move any bind mounts
     # nor can we bind mount $HOME into a new home as that requires a privileged container.
     sudo usermod --login "$DOCKER_USER" vscode
     sudo groupmod -n "$DOCKER_USER" vscode
 
     sudo sed -i "/vscode/d" /etc/sudoers.d/nopasswd
+    sudo cd /home/${HOME_USER}
   fi
 fi
 
