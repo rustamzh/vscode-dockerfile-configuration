@@ -12,8 +12,8 @@ RUN sudo apt-get install -y wget
 #Instalando jq
 RUN sudo apt-get install -y jq
 
-RUN adduser --gecos '' --disabled-password vscode \
-  && echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+RUN adduser --uid 1001 --gecos '' --disabled-password vscode \
+    && echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
 RUN ARCH="$(dpkg --print-architecture)" \
   && curl -fsSL "https://github.com/boxboat/fixuid/releases/download/v0.6.0/fixuid-0.6.0-linux-$ARCH.tar.gz" | tar -C /usr/local/bin -xzf - \
@@ -21,10 +21,6 @@ RUN ARCH="$(dpkg --print-architecture)" \
   && chmod 4755 /usr/local/bin/fixuid \
   && mkdir -p /etc/fixuid \
   && printf "user: vscode\ngroup: vscode\n" > /etc/fixuid/config.yml
-
-USER 1000
-ENV USER=vscode
-WORKDIR /home/vscode
 
 #Instalando devtunnel
 #Comandos que no se deben olvidar correr al crear el devtunnel
@@ -47,5 +43,9 @@ RUN sudo sysctl -w fs.inotify.max_user_watches=524288
 
 ADD ./entrypoint.sh /usr/bin/entrypoint.sh
 RUN sudo chmod +x /usr/bin/entrypoint.sh
+
+USER 1000
+ENV USER=vscode
+WORKDIR /home/vscode
 
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
