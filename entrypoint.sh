@@ -16,8 +16,8 @@ eval "$(fixuid -q)"
 if [ "${HOME_USER-}" ]; then
   USER="$HOME_USER"
   if [ "$HOME_USER" != "$(whoami)" ]; then
-    adduser --disabled-password --gecos "" ${HOME_USER}
-    echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
+    sudo adduser --disabled-password --gecos "" ${HOME_USER}
+    sudo echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
     su - $HOME_USER
     # Unfortunately we cannot change $HOME as we cannot move any bind mounts
     # nor can we bind mount $HOME into a new home as that requires a privileged container.
