@@ -33,11 +33,19 @@ fi
 
 
 #Creating extensions folder
-sudo mkdir /home/${HOME_USER}/.config/Code
+if [ ! -d "/home/${HOME_USER}/.config/Code" ]; then
+  sudo mkdir -p /home/${HOME_USER}/.config/Code
+fi
 sudo chmod -R a+rwX /home/${HOME_USER}/.config/Code
-sudo mkdir /home/${HOME_USER}/.vscode-server
+
+if [ ! -d "/home/${HOME_USER}/.vscode-server" ]; then
+  sudo mkdir -p /home/${HOME_USER}/.vscode-server
+fi
 sudo chmod -R a+rwX /home/${HOME_USER}/.vscode-server
-sudo mkdir /home/${HOME_USER}/.vscode-server-insiders
+
+if [ ! -d "/home/${HOME_USER}/.vscode-server-insiders" ]; then
+  sudo mkdir -p /home/${HOME_USER}/.vscode-server-insiders
+fi
 sudo chmod -R a+rwX /home/${HOME_USER}/.vscode-server-insiders
 
 # Check if the data.json file exists
