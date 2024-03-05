@@ -16,8 +16,10 @@ eval "$(fixuid -q)"
 if [ "${HOME_USER-}" ]; then
   USER="$HOME_USER"
   if [ "$HOME_USER" != "$(whoami)" ]; then
-    sudo adduser --disabled-password --gecos "" ${HOME_USER}
-    sudo echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
+    if ! id -u $HOME_USER > /dev/null 2>&1; then
+      sudo adduser --disabled-password --gecos "" ${HOME_USER}
+      sudo echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
+    fi
     sudo -u $HOME_USER -i
     # Unfortunately we cannot change $HOME as we cannot move any bind mounts
     # nor can we bind mount $HOME into a new home as that requires a privileged container.
@@ -25,7 +27,7 @@ if [ "${HOME_USER-}" ]; then
     # sudo groupmod -n "$HOME_USER" vscode
 
     # sudo sed -i "/vscode/d" /etc/sudoers.d/nopasswd
-    sudo cd /home/${HOME_USER}
+    # sudo cd /home/${HOME_USER}
   fi
 fi
 
