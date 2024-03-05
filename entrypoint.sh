@@ -28,6 +28,7 @@ if [ "${HOME_USER-}" ]; then
 
     # sudo sed -i "/vscode/d" /etc/sudoers.d/nopasswd
     # sudo cd /home/${HOME_USER}
+    sudo chown -R ${HOME_USER}:${HOME_USER} /home/${HOME_USER}
   fi
 fi
 
