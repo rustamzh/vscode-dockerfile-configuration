@@ -29,6 +29,10 @@ if [ "${HOME_USER-}" ]; then
     # sudo sed -i "/vscode/d" /etc/sudoers.d/nopasswd
     # sudo cd /home/${HOME_USER}
     sudo chown -R ${HOME_USER}:${HOME_USER} /home/${HOME_USER}
+    # Copy environment variables from vscode user to HOME_USER
+    env | grep -v 'HOME_USER' | while read -r line; do
+      sudo su - ${HOME_USER} -c "echo 'export $line' >> ~/.bashrc"
+    done
   fi
 fi
 
