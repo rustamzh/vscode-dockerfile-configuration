@@ -12,6 +12,9 @@ RUN sudo apt-get install -y wget
 #Instalando jq
 RUN sudo apt-get install -y jq
 
+RUN sudo apt-get update
+RUN sudo apt-get install dumb-init
+
 RUN adduser --gecos '' --disabled-password vscode \
     && echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
