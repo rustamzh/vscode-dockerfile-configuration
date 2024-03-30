@@ -77,9 +77,9 @@ fi
 
 # Allow users to have scripts run on container startup to prepare workspace.
 # https://github.com/coder/code-server/issues/5177
-if [ -d "${ENTRYPOINTD}" ]; then
-  find "${ENTRYPOINTD}" -type f -executable -print -exec {} \;
-fi
+#if [ -d "${ENTRYPOINTD}" ]; then
+  #find "${ENTRYPOINTD}" -type f -executable -print -exec {} \;
+#fi
 
 if [[ -z "${VSCODE_TUNNEL_NAME}" ]]; then
     exec dumb-init sudo su - ${HOME_USER} -c "code tunnel --accept-server-license-terms $@"
