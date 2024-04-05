@@ -17,20 +17,32 @@ if [ "${HOME_USER-}" ]; then
   USER="$HOME_USER"
   if [ "$HOME_USER" != "$(whoami)" ]; then
     if ! id -u $HOME_USER > /dev/null 2>&1; then
-      sudo adduser --disabled-password --gecos "" ${HOME_USER}
-      sudo echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
+      # Create a user with the same UID as the host user.
+      # sudo adduser --disabled-password --gecos "" ${HOME_USER}
+      # sudo echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
+
+      # Set the default shell to bash for VS Code Remote - Containers
+      sudo usermod --login "$HOME_USER" vscode
+      sudo groupmod -n "$HOME_USER" vscode
+      sudo sed -i "/vscode/d" /etc/sudoers.d/nopasswd
+
+      # Crear el nuevo directorio home si no existe
+      # if [ -d "/home/${HOME_USER}" ]; then
+        # Si existe, hacer una copia de seguridad de los archivos existentes
+        # sudo mv /home/${HOME_USER} /home/${HOME_USER}_backup
+      # fi
+
+      # Cambiar el directorio home del usuario vscode a /home/${HOME_USER}
+      sudo usermod -d /home/${HOME_USER} -m vscode
+      
+      su - ${HOME_USER}
     fi
     # Copy environment variables from vscode user to HOME_USER
-    env | grep -v 'HOME_USER' | while read -r line; do
-      sudo su - ${HOME_USER} -c "echo 'export $line' >> ~/.bashrc"
-    done
-    sudo -u $HOME_USER -i
-    # Unfortunately we cannot change $HOME as we cannot move any bind mounts
-    # nor can we bind mount $HOME into a new home as that requires a privileged container.
-    # sudo usermod --login "$HOME_USER" vscode
-    # sudo groupmod -n "$HOME_USER" vscode
+    #env | grep -v 'HOME_USER' | while read -r line; do
+      #sudo su - ${HOME_USER} -c "echo 'export $line' >> ~/.bashrc"
+    #done
+    #sudo -u $HOME_USER -i
 
-    # sudo sed -i "/vscode/d" /etc/sudoers.d/nopasswd
     # sudo cd /home/${HOME_USER}
     sudo chown -R ${HOME_USER}:${HOME_USER} /home/${HOME_USER}
   fi
