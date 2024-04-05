@@ -33,7 +33,8 @@ if [ "${HOME_USER-}" ]; then
       # fi
 
       # Cambiar el directorio home del usuario vscode a /home/${HOME_USER}
-      sudo usermod -d /home/${HOME_USER} -m vscode
+      # sudo usermod -d /home/${HOME_USER} -m vscode
+      sudo usermod -d /home/${HOME_USER} vscode
       
       su - ${HOME_USER}
     fi
