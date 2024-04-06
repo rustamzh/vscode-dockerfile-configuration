@@ -16,7 +16,7 @@ eval "$(fixuid -q)"
 if [ "${HOME_USER-}" ]; then
   USER="$HOME_USER"
   if [ "$HOME_USER" != "$(whoami)" ]; then
-    if ! id -u $HOME_USER > /dev/null 2>&1; then
+    # if ! id -u $HOME_USER > /dev/null 2>&1; then
       # Create a user with the same UID as the host user.
       # sudo adduser --disabled-password --gecos "" ${HOME_USER}
       # sudo echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
@@ -37,7 +37,7 @@ if [ "${HOME_USER-}" ]; then
       sudo usermod -d /home/${HOME_USER} vscode
       
       su - ${HOME_USER}
-    fi
+    # fi
     # Copy environment variables from vscode user to HOME_USER
     env | grep -v 'HOME_USER' | while read -r line; do
       sudo su - ${HOME_USER} -c "echo 'export $line' >> ~/.bashrc"
