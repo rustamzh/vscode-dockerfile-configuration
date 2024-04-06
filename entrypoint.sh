@@ -39,10 +39,10 @@ if [ "${HOME_USER-}" ]; then
       su - ${HOME_USER}
     fi
     # Copy environment variables from vscode user to HOME_USER
-    #env | grep -v 'HOME_USER' | while read -r line; do
-      #sudo su - ${HOME_USER} -c "echo 'export $line' >> ~/.bashrc"
-    #done
-    #sudo -u $HOME_USER -i
+    env | grep -v 'HOME_USER' | while read -r line; do
+      sudo su - ${HOME_USER} -c "echo 'export $line' >> ~/.bashrc"
+    done
+    sudo -u $HOME_USER -i
 
     # sudo cd /home/${HOME_USER}
     sudo chown -R ${HOME_USER}:${HOME_USER} /home/${HOME_USER}
