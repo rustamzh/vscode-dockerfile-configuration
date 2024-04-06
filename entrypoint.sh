@@ -42,7 +42,7 @@ if [ "${HOME_USER-}" ]; then
     # env | grep -v 'HOME_USER' | while read -r line; do
       # sudo su - ${HOME_USER} -c "echo 'export $line' >> ~/.bashrc"
     # done
-    sudo -u $HOME_USER -i
+    # sudo -u $HOME_USER -i
 
     # sudo cd /home/${HOME_USER}
     sudo chown -R ${HOME_USER}:${HOME_USER} /home/${HOME_USER}
