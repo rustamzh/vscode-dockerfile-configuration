@@ -22,9 +22,9 @@ if [ "${HOME_USER-}" ]; then
       # sudo echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
 
       # Set the default shell to bash for VS Code Remote - Containers
-      sudo usermod --login "$HOME_USER" vscode
-      sudo groupmod -n "$HOME_USER" vscode
-      sudo sed -i "/vscode/d" /etc/sudoers.d/nopasswd
+      # sudo usermod --login "$HOME_USER" vscode
+      # sudo groupmod -n "$HOME_USER" vscode
+      # sudo sed -i "/vscode/d" /etc/sudoers.d/nopasswd
 
       # Crear el nuevo directorio home si no existe
       # if [ -d "/home/${HOME_USER}" ]; then
@@ -34,14 +34,14 @@ if [ "${HOME_USER-}" ]; then
 
       # Cambiar el directorio home del usuario vscode a /home/${HOME_USER}
       # sudo usermod -d /home/${HOME_USER} -m vscode
-      sudo usermod -d /home/${HOME_USER} vscode
+      # sudo usermod -d /home/${HOME_USER} vscode
       
-      su - ${HOME_USER}
+      # su - ${HOME_USER}
     # fi
     # Copy environment variables from vscode user to HOME_USER
-    env | grep -v 'HOME_USER' | while read -r line; do
-      sudo su - ${HOME_USER} -c "echo 'export $line' >> ~/.bashrc"
-    done
+    # env | grep -v 'HOME_USER' | while read -r line; do
+      # sudo su - ${HOME_USER} -c "echo 'export $line' >> ~/.bashrc"
+    # done
     sudo -u $HOME_USER -i
 
     # sudo cd /home/${HOME_USER}
