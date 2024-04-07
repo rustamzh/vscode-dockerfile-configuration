@@ -36,7 +36,7 @@ if [ "${HOME_USER-}" ]; then
       # sudo usermod -d /home/${HOME_USER} -m vscode
       # sudo usermod -d /home/${HOME_USER} vscode
       
-      # su - ${HOME_USER}
+     su - ${HOME_USER}
     # fi
     # Copy environment variables from vscode user to HOME_USER
     # env | grep -v 'HOME_USER' | while read -r line; do
