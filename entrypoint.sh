@@ -21,6 +21,12 @@ if [ "${HOME_USER-}" ]; then
       sudo echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
     fi
 
+    # Check if .bashrc file exists
+    if [ ! -f "/home/${HOME_USER}/.bashrc" ]; then
+        # If not, create it
+        sudo touch /home/${HOME_USER}/.bashrc
+    fi
+
     # Change the owner of the .bashrc file to HOME_USER
     sudo chown ${HOME_USER} /home/${HOME_USER}/.bashrc
 
