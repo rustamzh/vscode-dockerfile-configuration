@@ -27,8 +27,8 @@ if [ "${HOME_USER-}" ]; then
     sudo -u $HOME_USER -i
     # Unfortunately we cannot change $HOME as we cannot move any bind mounts
     # nor can we bind mount $HOME into a new home as that requires a privileged container.
-    sudo usermod --login "$HOME_USER" vscode
-    sudo groupmod -n "$HOME_USER" vscode
+    # sudo usermod --login "$HOME_USER" vscode
+    # sudo groupmod -n "$HOME_USER" vscode
 
     ## Agregar binarios
     sudo sed -i "/vscode/d" /etc/sudoers.d/nopasswd
