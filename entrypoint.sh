@@ -16,8 +16,10 @@ eval "$(fixuid -q)"
 if [ "${HOME_USER-}" ]; then
   USER="$HOME_USER"
   if [ "$HOME_USER" != "$(whoami)" ]; then
-    sudo adduser --disabled-password --gecos "" ${HOME_USER}
-    sudo echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
+    if ! id -u $HOME_USER > /dev/null 2>&1; then
+      sudo adduser --disabled-password --gecos "" ${HOME_USER}
+      sudo echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
+    fi
 
     # Copy environment variables from vscode user to HOME_USER
     env | grep -v 'HOME_USER' | while read -r line; do
@@ -30,19 +32,27 @@ if [ "${HOME_USER-}" ]; then
     # sudo usermod --login "$HOME_USER" vscode
     # sudo groupmod -n "$HOME_USER" vscode
 
-    ## Agregar binarios
-    sudo sed -i "/vscode/d" /etc/sudoers.d/nopasswd
-    sudo cd /home/${HOME_USER}
+    # sudo sed -i "/vscode/d" /etc/sudoers.d/nopasswd
+    # sudo cd /home/${HOME_USER}
+    sudo chown -R ${HOME_USER}:${HOME_USER} /home/${HOME_USER}
   fi
 fi
 
 
 #Creating extensions folder
-sudo mkdir /home/${HOME_USER}/.config/Code
+if [ ! -d "/home/${HOME_USER}/.config/Code" ]; then
+  sudo mkdir -p /home/${HOME_USER}/.config/Code
+fi
 sudo chmod -R a+rwX /home/${HOME_USER}/.config/Code
-sudo mkdir /home/${HOME_USER}/.vscode-server
+
+if [ ! -d "/home/${HOME_USER}/.vscode-server" ]; then
+  sudo mkdir -p /home/${HOME_USER}/.vscode-server
+fi
 sudo chmod -R a+rwX /home/${HOME_USER}/.vscode-server
-sudo mkdir /home/${HOME_USER}/.vscode-server-insiders
+
+if [ ! -d "/home/${HOME_USER}/.vscode-server-insiders" ]; then
+  sudo mkdir -p /home/${HOME_USER}/.vscode-server-insiders
+fi
 sudo chmod -R a+rwX /home/${HOME_USER}/.vscode-server-insiders
 
 # Check if the data.json file exists
