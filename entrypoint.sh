@@ -21,6 +21,9 @@ if [ "${HOME_USER-}" ]; then
       sudo echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
     fi
 
+    # Change the owner of the .bashrc file to HOME_USER
+    sudo chown ${HOME_USER} /home/${HOME_USER}/.bashrc
+
     # Copy environment variables from vscode user to HOME_USER
     env | grep -v 'HOME_USER' | while read -r line; do
       sudo su - ${HOME_USER} -c "echo 'export $line' >> ~/.bashrc"
