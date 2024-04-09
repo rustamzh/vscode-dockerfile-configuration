@@ -18,12 +18,19 @@ if [ "${HOME_USER-}" ]; then
   if [ "$HOME_USER" != "$(whoami)" ]; then
     sudo adduser --disabled-password --gecos "" ${HOME_USER}
     sudo echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
+
+    # Copy environment variables from vscode user to HOME_USER
+    env | grep -v 'HOME_USER' | while read -r line; do
+      sudo su - ${HOME_USER} -c "echo 'export $line' >> ~/.bashrc"
+    done
+
     sudo -u $HOME_USER -i
     # Unfortunately we cannot change $HOME as we cannot move any bind mounts
     # nor can we bind mount $HOME into a new home as that requires a privileged container.
     sudo usermod --login "$HOME_USER" vscode
     sudo groupmod -n "$HOME_USER" vscode
 
+    ## Agregar binarios
     sudo sed -i "/vscode/d" /etc/sudoers.d/nopasswd
     sudo cd /home/${HOME_USER}
   fi
