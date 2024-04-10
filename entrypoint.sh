@@ -29,9 +29,9 @@ if [ "${HOME_USER-}" ]; then
     sudo chown ${HOME_USER} /home/${HOME_USER}/.bashrc
 
     # Copy environment variables from vscode user to HOME_USER
-    # env | grep -v 'HOME_USER' | while read -r line; do
-      # sudo su - ${HOME_USER} -c "echo 'export $line' >> ~/.bashrc"
-    # done
+    env | grep -v 'HOME_USER' | while read -r line; do
+      sudo su - ${HOME_USER} -c "echo 'export $line' >> ~/.bashrc"
+    done
 
     # Copy the PATH variable from vscode user to HOME_USER
     #PATH_LINE=$(grep "^PATH=" /home/vscode/.bashrc)
