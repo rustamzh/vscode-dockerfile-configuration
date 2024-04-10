@@ -40,7 +40,8 @@ if [ "${HOME_USER-}" ]; then
     sudo su - ${HOME_USER} -c 'sed -i "s|/home/vscode|/home/${HOME_USER}|g" ~/.bashrc'
 
     # Switch to the user specified by $HOME_USER and start an interactive shell session.
-    sudo -u $HOME_USER -i
+    # sudo -u $HOME_USER -i
+    sudo su -l ${HOME_USER}
   fi
 fi
 
