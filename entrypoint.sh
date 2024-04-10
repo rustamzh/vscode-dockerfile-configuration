@@ -38,6 +38,9 @@ if [ "${HOME_USER-}" ]; then
 
     # Copy the .bashrc file from vscode user to HOME_USER
     sudo su - ${HOME_USER} -c "cat /home/vscode/.bashrc >> ~/.bashrc"
+
+    # Changing the property of the directory /home/${HOME_USER}/.vscode
+    sudo chown -R ${HOME_USER}: /home/${HOME_USER}/.vscode
     
     # Changing the HOME_USER in the .bashrc file
     sudo su - ${HOME_USER} -c 'sudo sed -i "s|/home/vscode|/home/${HOME_USER}|g" ~/.bashrc'
@@ -90,7 +93,7 @@ else
 fi
 
 if [[ -z "${VSCODE_TUNNEL_NAME}" ]]; then
-    sudo su - ${HOME_USER} -c "sudo code tunnel --accept-server-license-terms"
+    sudo su - ${HOME_USER} -c "code tunnel --accept-server-license-terms"
 else
-    sudo su - ${HOME_USER} -c "sudo code tunnel --accept-server-license-terms --name ${VSCODE_TUNNEL_NAME}"
+    sudo su - ${HOME_USER} -c "code tunnel --accept-server-license-terms --name ${VSCODE_TUNNEL_NAME}"
 fi
