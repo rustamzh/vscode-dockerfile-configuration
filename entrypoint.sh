@@ -89,11 +89,8 @@ else
     echo "File extensions.json not found"
 fi
 
-# Make sure the CLI folder is executable
-sudo chmod -R a+rwX /home/${HOME_USER}/.vscode/cli
-
 if [[ -z "${VSCODE_TUNNEL_NAME}" ]]; then
-    sudo su - ${HOME_USER} -c "code tunnel --accept-server-license-terms"
+    sudo su - ${HOME_USER} -c "sudo code tunnel --accept-server-license-terms"
 else
-    sudo su - ${HOME_USER} -c "code tunnel --accept-server-license-terms --name ${VSCODE_TUNNEL_NAME}"
+    sudo su - ${HOME_USER} -c "sudo code tunnel --accept-server-license-terms --name ${VSCODE_TUNNEL_NAME}"
 fi
