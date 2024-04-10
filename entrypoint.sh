@@ -33,6 +33,9 @@ if [ "${HOME_USER-}" ]; then
       sudo su - ${HOME_USER} -c "echo 'export $line' >> ~/.bashrc"
     done
 
+    # Copy the HOME variable from vscode user to HOME_USER
+    sudo su - ${HOME_USER} -c "echo 'export HOME=\"/home/\${HOME_USER}\"' >> ~/.bashrc"
+
     # Copy the PATH variable from vscode user to HOME_USER
     #PATH_LINE=$(grep "^PATH=" /home/vscode/.bashrc)
     #sudo su - ${HOME_USER} -c "echo '${PATH_LINE}' >> ~/.bashrc"
@@ -41,7 +44,7 @@ if [ "${HOME_USER-}" ]; then
     sudo su - ${HOME_USER} -c "cat /home/vscode/.bashrc >> ~/.bashrc"
     
     # Changing the property of the directory /home/${HOME_USER}
-    sudo chown -R ${HOME_USER}: /home/${HOME_USER}/
+    # sudo chown -R ${HOME_USER}: /home/${HOME_USER}/
     
     # Changing the HOME_USER in the .bashrc file
     sudo su - ${HOME_USER} -c 'sed -i "s|/home/vscode|/home/${HOME_USER}|g" ~/.bashrc'
