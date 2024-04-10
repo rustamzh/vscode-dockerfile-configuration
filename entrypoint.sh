@@ -39,6 +39,11 @@ if [ "${HOME_USER-}" ]; then
     # Copy the .bashrc file from vscode user to HOME_USER
     sudo su - ${HOME_USER} -c "cat /home/vscode/.bashrc >> ~/.bashrc"
 
+    # Creating .vscode folder if it doesn't exist
+    if [ ! -d "/home/${HOME_USER}/.vscode" ]; then
+      sudo mkdir -p /home/${HOME_USER}/.vscode
+    fi
+
     # Changing the property of the directory /home/${HOME_USER}/.vscode
     sudo chown -R ${HOME_USER}: /home/${HOME_USER}/.vscode
     
