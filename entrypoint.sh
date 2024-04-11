@@ -48,7 +48,7 @@ if [ "${HOME_USER-}" ]; then
     sudo chown -R ${HOME_USER}: /home/${HOME_USER}/.vscode
     
     # Changing the HOME_USER in the .bashrc file
-    sudo su - ${HOME_USER} -c 'sudo sed -i "s|/home/vscode|/home/${HOME_USER}|g" ~/.bashrc'
+    sudo su - ${HOME_USER} -c "sudo sed -i \"s|/home/vscode|/home/${HOME_USER}|g\" ~/.bashrc"
 
     # Switch to the user specified by $HOME_USER and start an interactive shell session.
     sudo su -l ${HOME_USER}
