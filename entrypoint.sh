@@ -51,7 +51,10 @@ if [ "${HOME_USER-}" ]; then
     sudo su -l ${HOME_USER}
 
     # Delete the vscode user
-    sudo userdel vscode
+    sudo userdel -r vscode
+  else
+    # Switch to the user specified by $HOME_USER and start an interactive shell session.
+    sudo su -l ${HOME_USER}
   fi
 fi
 
