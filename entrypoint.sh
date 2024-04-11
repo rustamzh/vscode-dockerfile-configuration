@@ -33,9 +33,6 @@ if [ "${HOME_USER-}" ]; then
       sudo su - ${HOME_USER} -c "echo 'export $line' >> ~/.bashrc"
     done
 
-    # Copy the HOME variable from vscode user to HOME_USER
-    sudo su - ${HOME_USER} -c "echo 'export HOME=\"/home/\${HOME_USER}\"' >> ~/.bashrc"
-
     # Copy the .bashrc file from vscode user to HOME_USER
     sudo su - ${HOME_USER} -c "cat /home/vscode/.bashrc >> ~/.bashrc"
 
@@ -52,6 +49,12 @@ if [ "${HOME_USER-}" ]; then
 
     # Switch to the user specified by $HOME_USER and start an interactive shell session.
     sudo su -l ${HOME_USER}
+
+    # Copy the HOME variable from vscode user to HOME_USER
+    sudo su -l ${HOME_USER} -c "echo \"export HOME=/home/${HOME_USER}\" >> ~/.bashrc"
+
+    # Source the .bashrc file to apply the changes immediately
+    sudo su -l ${HOME_USER} -c "source ~/.bashrc"
   fi
 fi
 
