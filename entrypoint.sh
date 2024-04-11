@@ -50,11 +50,8 @@ if [ "${HOME_USER-}" ]; then
     # Switch to the user specified by $HOME_USER and start an interactive shell session.
     sudo su -l ${HOME_USER}
 
-    # Copy the HOME variable from vscode user to HOME_USER
-    sudo su -l ${HOME_USER} -c "echo \"export HOME=/home/${HOME_USER}\" >> ~/.bashrc"
-
-    # Source the .bashrc file to apply the changes immediately
-    sudo su -l ${HOME_USER} -c "source ~/.bashrc"
+    # Delete the vscode user
+    sudo userdel vscode
   fi
 fi
 
