@@ -4,7 +4,9 @@ set -eu
 # Check if we are root
 if [ "$(id -u)" != "0" ]; then
    echo "This script must be run as root" 1>&2
-   exec sudo /usr/bin/entrypoint.sh
+   sudo bash -c "echo HOME_USER=$HOME_USER >> /etc/environment"
+   sudo bash -c "echo VSCODE_TUNNEL_NAME=$VSCODE_TUNNEL_NAME >> /etc/environment"
+   exec sudo bash -c "source /etc/environment; /usr/bin/entrypoint.sh"
 fi
 
 if [[ -z "${HOME_USER-}" ]]; then
