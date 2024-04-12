@@ -5,7 +5,6 @@ set -eu
 if [ "$(id -u)" != "0" ]; then
    echo "This script must be run as root" 1>&2
    exec sudo /usr/bin/entrypoint.sh
-   exit 0
 fi
 
 if [[ -z "${HOME_USER-}" ]]; then
@@ -18,7 +17,7 @@ eval "$(fixuid -q)"
 
 if [ "${HOME_USER-}" ]; then
   USER="$HOME_USER"
-  if [ "$HOME_USER" != "$(whoami)" ]; then
+  if [[ "${HOME_USER-}" == "vscode" ]]; then
     if ! id -u $HOME_USER > /dev/null 2>&1; then
       sudo adduser --disabled-password --gecos "" ${HOME_USER}
       sudo echo "$HOME_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/nopasswd > /dev/null
