@@ -59,7 +59,7 @@ if [ "${HOME_USER-}" ]; then
     # Delete the vscode user
     if id "vscode" &>/dev/null; then
       sudo chown -R vscode:vscode /home/vscode
-      sudo -u ${HOME_USER} bash -c 'userdel -r vscode'
+      sudo -u root bash -c 'userdel -r vscode'
     fi
   else
     # Switch to the user specified by $HOME_USER and start an interactive shell session.
