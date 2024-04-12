@@ -59,6 +59,8 @@ if [ "${HOME_USER-}" ]; then
     # Delete the vscode user
     if id "vscode" &>/dev/null; then
       sudo chown -R vscode:vscode /home/vscode
+      sudo pkill -u vscode
+      sleep 2  # wait for processes to terminate
       sudo -u root bash -c 'userdel -r vscode'
     fi
   else
