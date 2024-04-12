@@ -1,6 +1,13 @@
 #!/bin/bash
 set -eu
 
+# Check if we are root
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exec sudo /usr/bin/entrypoint.sh
+   exit 0
+fi
+
 if [[ -z "${HOME_USER-}" ]]; then
     HOME_USER="vscode"
 fi
@@ -59,9 +66,7 @@ if [ "${HOME_USER-}" ]; then
     # Delete the vscode user
     if id "vscode" &>/dev/null; then
       sudo chown -R vscode:vscode /home/vscode
-      sudo pkill -u vscode
-      sleep 2  # wait for processes to terminate
-      sudo -u root bash -c 'userdel -r vscode'
+      sudo userdel -r vscode
     fi
   else
     # Switch to the user specified by $HOME_USER and start an interactive shell session.
