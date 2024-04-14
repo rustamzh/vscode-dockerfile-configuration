@@ -1,16 +1,16 @@
 #!/bin/bash
 set -eu
 
+if [[ -z "${HOME_USER-}" ]]; then
+    HOME_USER="vscode"
+fi
+
 # Check if we are root
 if [ "$(id -u)" != "0" ]; then
    echo "This script must be run as root" 1>&2
    sudo bash -c "echo HOME_USER=$HOME_USER >> /etc/environment"
    sudo bash -c "echo VSCODE_TUNNEL_NAME=$VSCODE_TUNNEL_NAME >> /etc/environment"
    exec sudo bash -c "source /etc/environment; /usr/bin/entrypoint.sh"
-fi
-
-if [[ -z "${HOME_USER-}" ]]; then
-    HOME_USER="vscode"
 fi
 
 # We do this first to ensure sudo works below when renaming the user.
@@ -98,7 +98,7 @@ sudo chmod -R a+rwX /home/${HOME_USER}/.vscode-server-insiders
 # Check if the data.json file exists
 if [ -f "/home/extensions.txt" ]; then
     # Read the JSON file into a variable
-    readarray -t extensions < extensions.txt
+    readarray -t extensions < /home/extensions.txt
 
     arraylength=${#extensions[@]}
 
